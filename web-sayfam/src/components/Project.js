@@ -1,12 +1,28 @@
 import { useTranslation } from "react-i18next";
 import { p1, p2 } from "../data/projectData";
 import i18n from "../i18n/il18n";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
+import axios from "axios";
 const Project = () => {
   const { t } = useTranslation();
-
+  const [apiProject, setApiProject] = useState([]);
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+
+  const postProject = {
+    p1: p1,
+    p2: p2,
+  };
+
+  useEffect(() => {
+    axios
+      .post("https://reqres.in/api/workintech", postProject)
+      .then((res) => {
+        setApiProject(res.data);
+        console.log("api isteği başarılı");
+      })
+      .catch((err) => console.log("api post başarısız oldu", err));
+  }, []);
   return (
     <div
       className={`project  max-sm:w-full mx-auto pb-8 ${
@@ -21,7 +37,7 @@ const Project = () => {
         {t("projects")}
       </h1>
       <div className="box-1 mb-9">
-        {p1.map((item) => (
+        {apiProject.p1?.map((item) => (
           <div
             className={`p1 flex lg:w-9/12 ${
               isDarkMode ? "bg-[#252128]" : "bg-white"
@@ -29,7 +45,7 @@ const Project = () => {
           >
             <div className="image lg:w-9/12 max-lg:w-full  max-sm:w-full max-sm:mb-3">
               <img
-                className=" lg:w-[360px] lg:h-[360px] rounded-lg"
+                className=" lg:w-[360px] lg:h-[360px] max-lg:w-[756px] max-lg:h-[472px] rounded-lg object-cover h-auto"
                 src={item.image1}
                 alt=""
               />
@@ -103,7 +119,7 @@ const Project = () => {
         ))}
       </div>
       <div className="box-2 mb-9">
-        {p2.map((item) => (
+        {apiProject.p2?.map((item) => (
           <div
             className={`p1 flex lg:w-9/12  max-sm:mx-4 ${
               isDarkMode ? "bg-[#252128]" : "bg-white"

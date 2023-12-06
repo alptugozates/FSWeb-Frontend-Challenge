@@ -3,13 +3,31 @@ import { hakkımda } from "../data/profilData";
 import { aboutMe } from "../data/profilData";
 import profil from "../foto/imageprofil.png";
 import i18n from "../i18n/il18n";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
+import axios from "axios";
 
 export default function Profil() {
+  const [apiProfilData, setApiProfilData] = useState([]);
   const { t } = useTranslation();
 
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+
+  const postData = {
+    hakkımda: hakkımda,
+    aboutMe: aboutMe,
+  };
+
+  useEffect(() => {
+    axios
+      .post("https://reqres.in/api/workintech", postData)
+      .then((res) => {
+        setApiProfilData(res.data);
+        console.log("api isteği başarılı");
+      })
+      .catch((err) => console.log("api post başarısız oldu", err));
+  }, []);
+
   return (
     <div
       className={`profil ${
@@ -20,7 +38,7 @@ export default function Profil() {
         {isDarkMode ? "" : "Profile"}
       </h2>
       <div className="profil-content lg:w-9/12 flex lg:flex-row  lg:justify-center lg:items-stretch lg:mx-auto sm:flex-col sm:w-9/12 sm:mx-auto  max-sm:flex-col max-sm:items-center ">
-        {hakkımda.map((item) => (
+        {apiProfilData.hakkımda?.map((item) => (
           <div className="basic-info mt-16 max-sm:pl-4 ">
             <h3 className="lg:mb-2 lg:text-4xl sm:mb-2  text-white font-medium max-sm:pb-2 max-lg:text-3xl max-lg:text-center">
               {t("info")}

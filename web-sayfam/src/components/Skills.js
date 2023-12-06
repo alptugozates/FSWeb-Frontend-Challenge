@@ -2,14 +2,26 @@ import { useTranslation } from "react-i18next";
 import skilsData from "../data/skillsData";
 import skillsData from "../data/skillsData";
 import i18n from "../i18n/il18n";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
+import axios from "axios";
 // import "../App.css";
 const Skills = () => {
-  console.log(skilsData);
+  const [apiSkillsData, setApiSkillsData] = useState();
   const { t } = useTranslation();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   console.log("darkmode:", isDarkMode);
+
+  useEffect(() => {
+    axios
+      .post("https://reqres.in/api/workintech", skillsData)
+      .then((res) => {
+        setApiSkillsData(res.data);
+        console.log("api isteği başarılı");
+      })
+      .catch((err) => console.log("api post başarısız oldu", err));
+  }, []);
+
   return (
     <div
       className={`skills flex ${
@@ -26,7 +38,7 @@ const Skills = () => {
         </h2>
       </div>
       <div className="skillsBoks h-full p-0 m-0  flex flex-grow basis-200 flex-wrap lg:w-3/4 sm:w-3/4 max-sm:w-3/4 lg:mr-32 justify-between ">
-        {skillsData.map((item) => (
+        {apiSkillsData?.map((item) => (
           <div className="flex  items-center lg:w-[40%] max-w-[75%] sm:w-[40%]  max-sm:w-[35%]">
             <img className="max-w-[60%] mr-50" src={item.url} alt="" />
             <span
