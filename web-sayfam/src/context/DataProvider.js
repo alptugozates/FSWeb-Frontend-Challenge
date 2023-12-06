@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { createContext } from "react";
 import { useState } from "react";
 import headerData from "../data/headerData";
-import axios from "axios";
 import { aboutMe, hakkımda } from "../data/profilData";
 import { p1, p2 } from "../data/projectData";
 import skilsData from "../data/skillsData";
+import { instance } from "../api";
 
 export const DataContext = createContext();
 
@@ -16,8 +16,8 @@ export const DataProvider = ({ children }) => {
   const [apiSkillsData, setApiSkillsData] = useState([]);
 
   useEffect(() => {
-    axios
-      .post("https://reqres.in/api/workintech", headerData)
+    instance
+      .post("/", headerData)
       .then((res) => {
         setApiData(res.data);
         console.log("api isteği başarılı");
@@ -30,7 +30,7 @@ export const DataProvider = ({ children }) => {
     aboutMe: aboutMe,
   };
   useEffect(() => {
-    axios
+    instance
       .post("https://reqres.in/api/workintech", postData)
       .then((res) => {
         setApiProfilData(res.data);
@@ -45,7 +45,7 @@ export const DataProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    axios
+    instance
       .post("https://reqres.in/api/workintech", postProject)
       .then((res) => {
         setApiProject(res.data);
@@ -55,7 +55,7 @@ export const DataProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    axios
+    instance
       .post("https://reqres.in/api/workintech", skilsData)
       .then((res) => {
         setApiSkillsData(res.data);
