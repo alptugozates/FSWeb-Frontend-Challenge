@@ -10,17 +10,6 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const savedDarkMode = localStorage.getItem("isDarkMode") === "true";
-  const [isDarkMode, setIsDarkMode] = useState(savedDarkMode);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-  };
-
-  useEffect(() => {
-    localStorage.setItem("isDarkMode", isDarkMode);
-  }, [isDarkMode]);
-
   useEffect(() => {
     const language = localStorage.getItem("language") || "en";
     if (language === "tr") {
@@ -50,11 +39,11 @@ function App() {
 
   return (
     <div>
-      <Header isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      <Skills isDarkMode={isDarkMode} />
-      <Profil isDarkMode={isDarkMode} />
-      <Project isDarkMode={isDarkMode} />
-      <Footer isDarkMode={isDarkMode} />
+      <Header />
+      <Skills />
+      <Profil />
+      <Project />
+      <Footer />
       <ToastContainer />
     </div>
   );
