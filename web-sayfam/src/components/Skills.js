@@ -2,10 +2,14 @@ import { useTranslation } from "react-i18next";
 import skilsData from "../data/skillsData";
 import skillsData from "../data/skillsData";
 import i18n from "../i18n/il18n";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeProvider";
 // import "../App.css";
-const Skills = ({ isDarkMode }) => {
+const Skills = () => {
   console.log(skilsData);
   const { t } = useTranslation();
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  console.log("darkmode:", isDarkMode);
   return (
     <div
       className={`skills flex ${

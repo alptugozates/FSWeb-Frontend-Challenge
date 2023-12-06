@@ -1,8 +1,12 @@
 import { useTranslation } from "react-i18next";
 import { p1, p2 } from "../data/projectData";
 import i18n from "../i18n/il18n";
-const Project = ({ isDarkMode }) => {
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeProvider";
+const Project = () => {
   const { t } = useTranslation();
+
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   return (
     <div
       className={`project  max-sm:w-full mx-auto pb-8 ${

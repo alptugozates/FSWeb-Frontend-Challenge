@@ -3,13 +3,16 @@ import "../App.css";
 import "../index.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/il18n";
-export default function Header({ isDarkMode, toggleDarkMode }) {
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeProvider";
+export default function Header() {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = () => {
     const newLanguage = i18n.language === "en" ? "tr" : "en";
     i18n.changeLanguage(newLanguage);
   };
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
 
   const render = headerData.map((item) => {
     return (

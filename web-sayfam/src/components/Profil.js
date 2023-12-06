@@ -3,9 +3,13 @@ import { hakkımda } from "../data/profilData";
 import { aboutMe } from "../data/profilData";
 import profil from "../foto/imageprofil.png";
 import i18n from "../i18n/il18n";
+import { useContext } from "react";
+import { ThemeContext } from "../context/ThemeProvider";
 
-export default function Profil({ isDarkMode }) {
+export default function Profil() {
   const { t } = useTranslation();
+
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   return (
     <div
       className={`profil ${
