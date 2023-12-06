@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "../App.css";
 import instagram from "../foto/instagram.svg";
 import codepen from "../foto/codepen.svg";
@@ -6,10 +6,11 @@ import twitter from "../foto/twitter.svg";
 import atSign from "../foto/at-sign.svg";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/il18n";
+import { ThemeContext } from "../context/ThemeProvider";
 
-function Footer({ isDarkMode }) {
+function Footer() {
   const { t } = useTranslation();
-
+  const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
   return (
     <div
       className={` flex flex-col ${
