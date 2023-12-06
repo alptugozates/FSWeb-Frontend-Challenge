@@ -1,31 +1,19 @@
-import headerData from "../data/headerData";
 import "../App.css";
 import "../index.css";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/il18n";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
-import axios from "axios";
+import { DataContext } from "../context/DataProvider";
 export default function Header() {
   const { t, i18n } = useTranslation();
-  const [apiData, setApiData] = useState([]);
 
   const changeLanguage = () => {
     const newLanguage = i18n.language === "en" ? "tr" : "en";
     i18n.changeLanguage(newLanguage);
   };
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
-
-  useEffect(() => {
-    axios
-      .post("https://reqres.in/api/workintech", headerData)
-      .then((res) => {
-        setApiData(res.data);
-        console.log("api isteği başarılı");
-      })
-      .catch((err) => console.log("api post başarısız oldu", err));
-  }, []);
-
+  const { apiData } = useContext(DataContext);
   const render = apiData.map((item) => {
     return (
       <div

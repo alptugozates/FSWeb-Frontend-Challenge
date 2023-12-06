@@ -1,28 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { p1, p2 } from "../data/projectData";
 import i18n from "../i18n/il18n";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
-import axios from "axios";
+import { DataContext } from "../context/DataProvider";
+
 const Project = () => {
   const { t } = useTranslation();
-  const [apiProject, setApiProject] = useState([]);
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  const { apiProject } = useContext(DataContext);
 
-  const postProject = {
-    p1: p1,
-    p2: p2,
-  };
-
-  useEffect(() => {
-    axios
-      .post("https://reqres.in/api/workintech", postProject)
-      .then((res) => {
-        setApiProject(res.data);
-        console.log("api isteği başarılı");
-      })
-      .catch((err) => console.log("api post başarısız oldu", err));
-  }, []);
   return (
     <div
       className={`project  max-sm:w-full mx-auto pb-8 ${

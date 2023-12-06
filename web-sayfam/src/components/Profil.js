@@ -1,32 +1,15 @@
 import { useTranslation } from "react-i18next";
-import { hakkımda } from "../data/profilData";
 import { aboutMe } from "../data/profilData";
 import profil from "../foto/imageprofil.png";
 import i18n from "../i18n/il18n";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
-import axios from "axios";
+import { DataContext } from "../context/DataProvider";
 
 export default function Profil() {
-  const [apiProfilData, setApiProfilData] = useState([]);
   const { t } = useTranslation();
-
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
-
-  const postData = {
-    hakkımda: hakkımda,
-    aboutMe: aboutMe,
-  };
-
-  useEffect(() => {
-    axios
-      .post("https://reqres.in/api/workintech", postData)
-      .then((res) => {
-        setApiProfilData(res.data);
-        console.log("api isteği başarılı");
-      })
-      .catch((err) => console.log("api post başarısız oldu", err));
-  }, []);
+  const { apiProfilData } = useContext(DataContext);
 
   return (
     <div

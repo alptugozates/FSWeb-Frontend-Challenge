@@ -1,26 +1,14 @@
 import { useTranslation } from "react-i18next";
-import skilsData from "../data/skillsData";
-import skillsData from "../data/skillsData";
 import i18n from "../i18n/il18n";
 import { useContext, useEffect, useState } from "react";
 import { ThemeContext } from "../context/ThemeProvider";
-import axios from "axios";
-// import "../App.css";
+import { DataContext } from "../context/DataProvider";
+
 const Skills = () => {
-  const [apiSkillsData, setApiSkillsData] = useState();
   const { t } = useTranslation();
   const { isDarkMode, toggleDarkMode } = useContext(ThemeContext);
+  const { apiSkillsData } = useContext(DataContext);
   console.log("darkmode:", isDarkMode);
-
-  useEffect(() => {
-    axios
-      .post("https://reqres.in/api/workintech", skillsData)
-      .then((res) => {
-        setApiSkillsData(res.data);
-        console.log("api isteği başarılı");
-      })
-      .catch((err) => console.log("api post başarısız oldu", err));
-  }, []);
 
   return (
     <div
